@@ -14,11 +14,11 @@ function Todolist({title, tasks}: TodolistProps) {
         <div>
             <h3>{title}</h3>
             <div>
-                <input />
+                <input/>
                 <button>+</button>
             </div>
             <ul>
-                {tasks.map((task) => <li><input type="checkbox" checked={task.isDone} /> <span>{task.title}</span></li>)}
+                {tasks.map((task) => <li><input type="checkbox" checked={task.isDone}/> <span>{task.title}</span></li>)}
             </ul>
             <div>
                 <button>All</button>
