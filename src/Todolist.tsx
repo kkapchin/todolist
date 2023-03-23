@@ -9,7 +9,7 @@ type TodolistProps = {
     tasks: Array<TaskType>,
 }
 
-function Todolist({title, tasks}: TodolistProps) {
+export default function Todolist ({title, tasks}: TodolistProps) {
     return (
         <div>
             <h3>{title}</h3>
@@ -18,7 +18,17 @@ function Todolist({title, tasks}: TodolistProps) {
                 <button>+</button>
             </div>
             <ul>
-                {tasks.map(task => <li key={task.id}><input type="checkbox" checked={task.isDone}/> <span>{task.title}</span></li>)}
+                {tasks.map((task) => {
+                    return (
+                        <li key={task.id}>
+                            <input type="checkbox" checked={task.isDone}/>
+                            <span>{task.title} </span>
+                            <button onClick={() => {
+                                alert(task.id)
+                            }}>✖️</button>
+                        </li>
+                    );
+                })}
             </ul>
             <div>
                 <button>All</button>
@@ -28,5 +38,3 @@ function Todolist({title, tasks}: TodolistProps) {
         </div>
     );
 }
-
-export default Todolist;
