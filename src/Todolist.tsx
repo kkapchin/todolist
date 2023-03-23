@@ -1,3 +1,5 @@
+import {Filter} from "./App";
+
 export type TaskType = {
     id: number;
     title: string;
@@ -8,9 +10,10 @@ type TodolistProps = {
     title: string;
     tasks: Array<TaskType>;
     removeTask: (id: number) => void;
+    changeFilter: (filter: Filter) => void;
 }
 
-export default function Todolist ({title, tasks, removeTask}: TodolistProps) {
+export default function Todolist ({title, tasks, removeTask, changeFilter}: TodolistProps) {
     return (
         <div>
             <h3>{title}</h3>
@@ -32,9 +35,9 @@ export default function Todolist ({title, tasks, removeTask}: TodolistProps) {
                 })}
             </ul>
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => changeFilter(Filter.ALL)}>All</button>
+                <button onClick={() => changeFilter(Filter.ACTIVE)}>Active</button>
+                <button onClick={() => changeFilter(Filter.COMPLETED)}>Completed</button>
             </div>
         </div>
     );
