@@ -18,7 +18,7 @@ function Todolist({title, tasks}: TodolistProps) {
                 <button>+</button>
             </div>
             <ul>
-                {tasks.map((task) => <li><input type="checkbox" checked={task.isDone}/> <span>{task.title}</span></li>)}
+                {tasks.map(task => <li key={task.id}><input type="checkbox" checked={task.isDone}/> <span>{task.title}</span></li>)}
             </ul>
             <div>
                 <button>All</button>
