@@ -1,15 +1,16 @@
-type TaskType = {
-    id: number,
-    title: string,
-    isDone: boolean,
+export type TaskType = {
+    id: number;
+    title: string;
+    isDone: boolean;
 }
 
 type TodolistProps = {
-    title: string,
-    tasks: Array<TaskType>,
+    title: string;
+    tasks: Array<TaskType>;
+    removeTask: (id: number) => void;
 }
 
-export default function Todolist ({title, tasks}: TodolistProps) {
+export default function Todolist ({title, tasks, removeTask}: TodolistProps) {
     return (
         <div>
             <h3>{title}</h3>
@@ -24,7 +25,7 @@ export default function Todolist ({title, tasks}: TodolistProps) {
                             <input type="checkbox" checked={task.isDone}/>
                             <span>{task.title} </span>
                             <button onClick={() => {
-                                alert(task.id)
+                                removeTask(task.id);
                             }}>✖️</button>
                         </li>
                     );

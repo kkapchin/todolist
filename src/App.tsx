@@ -1,9 +1,10 @@
 import './App.css';
-import Todolist from './Todolist';
+import {useState} from "react";
+import Todolist from "./Todolist";
 
-function App() {
+export default function App() {
 
-    const tasks1 = [
+    const initialTasks = [
         { id: 1, title: "HTML&CSS", isDone: true },
         { id: 2, title: "JS", isDone: true },
         { id: 3, title: "ReactJS", isDone: false },
@@ -11,11 +12,15 @@ function App() {
         { id: 5, title: "GraphQL", isDone: false },
     ]
 
+    const [tasks, setTasks] = useState(initialTasks);
+
+    const removeTask = (id: number) => {
+        setTasks(tasks.filter(task => task.id !== id));
+    }
+
     return (
         <div className="App">
-            <Todolist title={'What to learn'} tasks={tasks1} />
+            <Todolist title={'What to learn'} tasks={tasks} removeTask={removeTask}/>
         </div>
     );
 }
-
-export default App;
