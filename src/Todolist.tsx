@@ -17,7 +17,6 @@ export default function Todolist(props: TodolistProps) {
         tasks,
         removeTask,
         changeFilter,
-        addTask,
         changeStatus,
     } = props;
 
@@ -27,14 +26,18 @@ export default function Todolist(props: TodolistProps) {
         setNewTitle(e.currentTarget.value)
     }
 
+    const addTask = () => {
+        if (newTitle.trim() === '') {
+            return;
+        }
+        props.addTask(newTitle.trim());
+    }
+
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key !== 'Enter') {
             return;
         }
-        if (newTitle.trim() === '') {
-            return;
-        }
-        addTask(newTitle.trim());
+        addTask();
         setNewTitle('');
     }
 
@@ -46,7 +49,7 @@ export default function Todolist(props: TodolistProps) {
                        onKeyDown={onKeyDownHandler}
                        value={newTitle}
                 />
-                <button>+</button>
+                <button onClick={addTask}>+</button>
             </div>
             <ul>
                 {tasks.map(task => {
