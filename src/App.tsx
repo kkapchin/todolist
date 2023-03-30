@@ -27,11 +27,11 @@ export default function App() {
     }
 
     const addTask = (title: string) => {
-        setTasks([...tasks, {
+        setTasks([{
             id: v1(),
             title: title,
             isDone: false,
-        }])
+        }, ...tasks]);
     }
 
     const changeTaskStatus = (taskId: string, isDone: boolean) => {
