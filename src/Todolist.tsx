@@ -1,5 +1,5 @@
 import {ChangeEvent, KeyboardEvent, useState} from "react";
-import { TaskType } from "./Types/task-type";
+import {TaskType} from "./Types/task-type";
 import {Filter} from "./const";
 
 type TodolistProps = {
@@ -8,9 +8,18 @@ type TodolistProps = {
     removeTask: (id: string) => void
     changeFilter: (filter: Filter) => void
     addTask: (title: string) => void
+    changeStatus: (taskId: string, isDone: boolean) => void
 }
 
-export default function Todolist({title, tasks, removeTask, changeFilter, addTask}: TodolistProps) {
+export default function Todolist(props: TodolistProps) {
+    const {
+        title,
+        tasks,
+        removeTask,
+        changeFilter,
+        addTask,
+        changeStatus,
+    } = props;
 
     const [newTitle, setNewTitle] = useState('')
 
@@ -19,7 +28,7 @@ export default function Todolist({title, tasks, removeTask, changeFilter, addTas
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if(e.key !== 'Enter') {
+        if (e.key !== 'Enter') {
             return;
         }
         addTask(newTitle);
@@ -38,13 +47,20 @@ export default function Todolist({title, tasks, removeTask, changeFilter, addTas
             </div>
             <ul>
                 {tasks.map(task => {
+
+                    const onRemoveHandler = () => {removeTask(task.id)}
+                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        changeStatus(task.id, e.currentTarget.checked);
+                    }
+
                     return (
                         <li key={task.id}>
-                            <input type="checkbox" checked={task.isDone}/>
+                            <input type="checkbox"
+                                   checked={task.isDone}
+                                   onChange={onChangeHandler}
+                            />
                             <span>{task.title} </span>
-                            <button onClick={() => {
-                                removeTask(task.id);
-                            }}>✖️
+                            <button onClick={onRemoveHandler}>✖️
                             </button>
                         </li>
                     );

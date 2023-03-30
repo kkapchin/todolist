@@ -34,6 +34,14 @@ export default function App() {
         }])
     }
 
+    const changeTaskStatus = (taskId: string, isDone: boolean) => {
+        const task = tasks.find(t => t.id === taskId);
+        if(task) {
+            task.isDone = isDone;
+            setTasks([...tasks]);
+        }
+    }
+
     const getFilteredTasks = () => {
         switch (filter) {
             case Filter.ACTIVE:
@@ -53,6 +61,7 @@ export default function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeStatus={changeTaskStatus}
             />
         </div>
     );
