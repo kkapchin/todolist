@@ -31,7 +31,10 @@ export default function Todolist(props: TodolistProps) {
         if (e.key !== 'Enter') {
             return;
         }
-        addTask(newTitle);
+        if (newTitle.trim() === '') {
+            return;
+        }
+        addTask(newTitle.trim());
         setNewTitle('');
     }
 
