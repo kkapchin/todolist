@@ -62,6 +62,7 @@ export default function App() {
                 changeFilter={changeFilter}
                 addTask={addTask}
                 changeStatus={changeTaskStatus}
+                currentFilter={filter}
             />
         </div>
     );

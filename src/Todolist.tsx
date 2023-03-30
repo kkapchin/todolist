@@ -9,6 +9,7 @@ type TodolistProps = {
     changeFilter: (filter: Filter) => void
     addTask: (title: string) => void
     changeStatus: (taskId: string, isDone: boolean) => void
+    currentFilter: Filter
 }
 
 export default function Todolist(props: TodolistProps) {
@@ -18,6 +19,7 @@ export default function Todolist(props: TodolistProps) {
         removeTask,
         changeFilter,
         changeStatus,
+        currentFilter,
     } = props;
 
     const [newTitle, setNewTitle] = useState('');
@@ -80,9 +82,15 @@ export default function Todolist(props: TodolistProps) {
                 })}
             </ul>
             <div>
-                <button onClick={() => changeFilter(Filter.ALL)}>All</button>
-                <button onClick={() => changeFilter(Filter.ACTIVE)}>Active</button>
-                <button onClick={() => changeFilter(Filter.COMPLETED)}>Completed</button>
+                <button onClick={() => changeFilter(Filter.ALL)}
+                        className={currentFilter === Filter.ALL ? 'active-filter' : ''}
+                >All</button>
+                <button onClick={() => changeFilter(Filter.ACTIVE)}
+                        className={currentFilter === Filter.ACTIVE ? 'active-filter' : ''}
+                >Active</button>
+                <button onClick={() => changeFilter(Filter.COMPLETED)}
+                        className={currentFilter === Filter.COMPLETED ? 'active-filter' : ''}
+                >Completed</button>
             </div>
         </div>
     );
