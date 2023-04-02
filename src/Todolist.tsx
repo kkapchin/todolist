@@ -35,6 +35,7 @@ export default function Todolist(props: TodolistProps) {
             return;
         }
         props.addTask(newTitle.trim());
+        setNewTitle('');
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -43,7 +44,6 @@ export default function Todolist(props: TodolistProps) {
             return;
         }
         addTask();
-        setNewTitle('');
     }
 
     return (
