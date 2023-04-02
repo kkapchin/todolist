@@ -2,7 +2,6 @@ import './App.css';
 import {useState} from "react";
 import Todolist from "./Todolist";
 import {v1} from "uuid";
-import {TaskType} from "./Types/task-type";
 import {Filter} from "./const";
 import {TodolistType} from "./Types/todolist-type";
 
@@ -33,8 +32,7 @@ export default function App() {
     ;
 
     const removeTask = (id: string, todolistId: string) => {
-        const tasks = tasksObj[todolistId].filter(task => task.id !== id);
-        tasksObj[todolistId] = tasks;
+        tasksObj[todolistId] = tasksObj[todolistId].filter(task => task.id !== id);
         setTasksObj({...tasksObj});
     }
 
