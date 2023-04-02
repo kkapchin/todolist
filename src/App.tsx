@@ -28,8 +28,15 @@ export default function App() {
                 {id: v1(), title: "Eggs", isDone: false},
                 {id: v1(), title: "Butter", isDone: false},
             ],
-        })
-    ;
+    });
+
+    const removeTodolist = (todolistId: string) => {
+        setTodolists([
+            ...todolists.filter(tl => tl.id !== todolistId)
+        ]);
+        delete tasksObj[todolistId];
+        setTasksObj({...tasksObj});
+    }
 
     const removeTask = (id: string, todolistId: string) => {
         tasksObj[todolistId] = tasksObj[todolistId].filter(task => task.id !== id);
@@ -86,6 +93,7 @@ export default function App() {
                         addTask={addTask}
                         changeStatus={changeTaskStatus}
                         currentFilter={tl.filter}
+                        removeTodolist={removeTodolist}
                     />
                 )
             })}
