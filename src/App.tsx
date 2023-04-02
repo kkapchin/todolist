@@ -4,6 +4,7 @@ import Todolist from "./Todolist";
 import {v1} from "uuid";
 import {TaskType} from "./Types/task-type";
 import {Filter} from "./const";
+import {TodolistType} from "./Types/todolist-type";
 
 export default function App() {
 
@@ -53,17 +54,26 @@ export default function App() {
         }
     }
 
+    const todolists: Array<TodolistType> = [
+        {id: v1(), title: 'What to learn', filter: Filter.ALL},
+        {id: v1(), title: 'What to buy', filter: Filter.COMPLETED},
+    ]
+
     return (
         <div className="App">
-            <Todolist
-                title={'What to learn'}
-                tasks={getFilteredTasks()}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
-                addTask={addTask}
-                changeStatus={changeTaskStatus}
-                currentFilter={filter}
-            />
+            {todolists.map(tl => {
+                return (
+                    <Todolist
+                        title={tl.title}
+                        tasks={getFilteredTasks()}
+                        removeTask={removeTask}
+                        changeFilter={changeFilter}
+                        addTask={addTask}
+                        changeStatus={changeTaskStatus}
+                        currentFilter={tl.filter}
+                    />
+                )
+            })}
         </div>
     );
 }
