@@ -5,6 +5,11 @@ import {v1} from "uuid";
 import {Filter} from "./const";
 import {TodolistType} from "./types/todolist-type";
 import AddItemForm from "./components/add-item-form/add-item-form";
+import {TaskType} from "./types/task-type";
+
+type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
 
 export default function App() {
     const todolistId1 = v1();
@@ -15,7 +20,7 @@ export default function App() {
         {id: todolistId2, title: 'What to buy', filter: Filter.ALL},
     ]);
 
-    const [tasksObj, setTasksObj] = useState({
+    const [tasksObj, setTasksObj] = useState<TasksStateType>({
             [todolistId1]: [
                 {id: v1(), title: "HTML&CSS", isDone: true},
                 {id: v1(), title: "JS", isDone: true},
