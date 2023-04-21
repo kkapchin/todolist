@@ -42,8 +42,7 @@ export default function Todolist(props: PropsType) {
             <AddItemForm addItem={addTask} />
             <ul>
                 {tasks.map(task => {
-
-                    const onRemoveHandler = () => {removeTask(task.id, id)}
+                    const onRemoveHandler = () => removeTask(task.id, id);
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         changeStatus(task.id, id, e.currentTarget.checked);
                     }
