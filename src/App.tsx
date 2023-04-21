@@ -4,6 +4,7 @@ import Todolist from "./components/todolist/todolist";
 import {v1} from "uuid";
 import {Filter} from "./const";
 import {TodolistType} from "./types/todolist-type";
+import AddItemForm from "./components/add-item-form/add-item-form";
 
 export default function App() {
     const todolistId1 = v1();
@@ -13,6 +14,7 @@ export default function App() {
         {id: todolistId1, title: 'What to learn', filter: Filter.ALL},
         {id: todolistId2, title: 'What to buy', filter: Filter.ALL},
     ]);
+
     const [tasksObj, setTasksObj] = useState({
             [todolistId1]: [
                 {id: v1(), title: "HTML&CSS", isDone: true},
@@ -60,6 +62,16 @@ export default function App() {
         setTasksObj({...tasksObj});
     }
 
+    const addTodolist = (title: string) => {
+        const todolist = {
+            id: v1(),
+            title: title,
+            filter: Filter.ALL,
+        }
+        setTodolists([todolist, ...todolists]);
+        setTasksObj({[todolist.id]: [], ...tasksObj});
+    }
+
     const changeTaskStatus = (taskId: string, todolistId: string, isDone: boolean) => {
         const task = tasksObj[todolistId].find(t => t.id === taskId);
         if (task) {
@@ -81,6 +93,7 @@ export default function App() {
 
     return (
         <div className="App">
+            <AddItemForm addItem={addTodolist} />
             {todolists.map(tl => {
                 return (
                     <Todolist
