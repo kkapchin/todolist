@@ -1,6 +1,6 @@
 import {ChangeEvent, KeyboardEvent, useState} from "react";
-import {TaskType} from "./Types/task-type";
-import {Filter} from "./const";
+import {TaskType} from "../../types/task-type";
+import {Filter} from "../../const";
 
 type PropsType = {
     id: string

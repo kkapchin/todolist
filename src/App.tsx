@@ -1,9 +1,9 @@
 import './App.css';
 import {useState} from "react";
-import Todolist from "./Todolist";
+import Todolist from "./components/todolist/todolist";
 import {v1} from "uuid";
 import {Filter} from "./const";
-import {TodolistType} from "./Types/todolist-type";
+import {TodolistType} from "./types/todolist-type";
 
 export default function App() {
     const todolistId1 = v1();
@@ -11,7 +11,7 @@ export default function App() {
 
     const [todolists, setTodolists] = useState<Array<TodolistType>>([
         {id: todolistId1, title: 'What to learn', filter: Filter.ALL},
-        {id: todolistId2, title: 'What to buy', filter: Filter.COMPLETED},
+        {id: todolistId2, title: 'What to buy', filter: Filter.ALL},
     ]);
     const [tasksObj, setTasksObj] = useState({
             [todolistId1]: [
