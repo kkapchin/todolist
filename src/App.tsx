@@ -85,6 +85,14 @@ export default function App() {
         }
     }
 
+    const changeTaskTitle = (taskId: string, todolistId: string, newTitle: string) => {
+        const task = tasksObj[todolistId].find(t => t.id === taskId);
+        if (task) {
+            task.title = newTitle;
+            setTasksObj({...tasksObj});
+        }
+    }
+
     const getFilteredTasks = (filter: Filter, todolistId: string) => {
         switch (filter) {
             case Filter.ACTIVE:
@@ -110,6 +118,7 @@ export default function App() {
                         changeFilter={changeFilter}
                         addTask={addTask}
                         changeStatus={changeTaskStatus}
+                        changeTitle={changeTaskTitle}
                         currentFilter={tl.filter}
                         removeTodolist={removeTodolist}
                     />
