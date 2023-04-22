@@ -1,6 +1,8 @@
-import {ChangeEvent, KeyboardEvent, useState} from "react";
-import {TaskType} from "./Types/task-type";
-import {Filter} from "./const";
+import {ChangeEvent} from "react";
+import {TaskType} from "../../types/task-type";
+import {Filter} from "../../const";
+import AddItemForm from "../add-item-form/add-item-form";
+import EditableSpan from "../editable-span/editable-span";
 
 type PropsType = {
     id: string
@@ -10,8 +12,10 @@ type PropsType = {
     changeFilter: (filter: Filter, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
     changeStatus: (taskId: string, todolistId: string, isDone: boolean) => void
+    changeTitle: (taskId: string, todolistId: string, newTitle: string) => void
     currentFilter: Filter
     removeTodolist: (todolistId: string) => void
+    changeTodolistTitle: (todolistId: string, newTitle: string) => void
 }
 
 export default function Todolist(props: PropsType) {
@@ -22,57 +26,40 @@ export default function Todolist(props: PropsType) {
         removeTask,
         changeFilter,
         changeStatus,
+        changeTitle,
         currentFilter,
         removeTodolist,
+        changeTodolistTitle,
     } = props;
 
-    const [newTitle, setNewTitle] = useState('');
-    const [error, setError] = useState<null | string>(null);
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTitle(e.currentTarget.value)
-    }
-
-    const addTask = () => {
-        if (newTitle.trim() === '') {
-            setError('Title is required')
-            return;
-        }
-        props.addTask(newTitle.trim(), id);
-        setNewTitle('');
-    }
-
-    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
-        if (e.key !== 'Enter') {
-            return;
-        }
-        addTask();
+    const addTask = (title: string) => {
+        props.addTask(title, id);
     }
 
     const removeTodolistHandler = () => {
         removeTodolist(id);
     }
 
+    const onChangeTodolistTitleHandler = (newTitle: string) => {
+        changeTodolistTitle(id, newTitle);
+    }
+
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>
+                <EditableSpan title={title} onChange={onChangeTodolistTitleHandler}/>
+            </h3>
             <button onClick={removeTodolistHandler}>✖️</button>
-            <div>
-                <input onChange={onChangeHandler}
-                       onKeyDown={onKeyDownHandler}
-                       value={newTitle}
-                       className={error ? 'error' : ''}
-                />
-                <button onClick={addTask}>+</button>
-                {error && <div className="error-message">{error}</div>}
-            </div>
+            <AddItemForm addItem={addTask} />
             <ul>
                 {tasks.map(task => {
+                    const onRemoveHandler = () => removeTask(task.id, id);
 
-                    const onRemoveHandler = () => {removeTask(task.id, id)}
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                    const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         changeStatus(task.id, id, e.currentTarget.checked);
+                    }
+                    const onChangeTitleHandler = (newTitle: string) => {
+                        changeTitle(task.id, id, newTitle);
                     }
 
                     return (
@@ -81,9 +68,10 @@ export default function Todolist(props: PropsType) {
                         >
                             <input type="checkbox"
                                    checked={task.isDone}
-                                   onChange={onChangeHandler}
+                                   onChange={onChangeStatusHandler}
                             />
-                            <span>{task.title} </span>
+                            <EditableSpan title={task.title}
+                                          onChange={onChangeTitleHandler} />
                             <button onClick={onRemoveHandler}>✖️
                             </button>
                         </li>
