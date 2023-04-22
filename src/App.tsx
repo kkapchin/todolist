@@ -45,6 +45,14 @@ export default function App() {
         setTasksObj({...tasksObj});
     }
 
+    const changeTodolistTitle = (id: string, newTitle: string) => {
+        const todolist = todolists.find(tl => tl.id === id);
+        if(todolist) {
+            todolist.title = newTitle;
+            setTodolists([...todolists]);
+        }
+    }
+
     const removeTask = (id: string, todolistId: string) => {
         tasksObj[todolistId] = tasksObj[todolistId].filter(task => task.id !== id);
         setTasksObj({...tasksObj});
@@ -121,6 +129,7 @@ export default function App() {
                         changeTitle={changeTaskTitle}
                         currentFilter={tl.filter}
                         removeTodolist={removeTodolist}
+                        changeTodolistTitle={changeTodolistTitle}
                     />
                 )
             })}
